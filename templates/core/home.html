@@ -5,32 +5,47 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="relative overflow-hidden">
-    <div class="container mx-auto px-4 py-24">
+<div class="relative w-full bg-cover bg-center bg-no-repeat" 
+     style="background-image: url('{% static "images/hero.jpeg" %}');">
+
+    <!-- Overlay flou + assombrissement -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+    <div class="relative container mx-auto px-4 py-24">
         <div class="text-center">
-            <img src="{% static 'images/logo.jpg' %}" alt="Harmony Logo" class="h-32 w-32 rounded-full mx-auto mb-8 border-4 border-harmony-red">
+
+            <img src="{% static 'images/logo.jpg' %}" 
+                 alt="Harmony Logo" 
+                 class="h-32 w-32 rounded-full mx-auto mb-8 border-4 border-harmony-red">
+
             <h1 class="text-6xl font-bold text-harmony-title mb-4">Harmony</h1>
+
             <p class="text-3xl text-white mb-8">The Sound of Us.</p>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
+
+            <p class="text-xl text-gray-200 max-w-2xl mx-auto mb-12">
                 Reconnecter à la mémoire musicale via des salons communautaires, 
                 des discussions, un lecteur audio partagé et des quiz musicaux.
             </p>
             
             {% if user.is_authenticated %}
                 <div class="space-x-4">
-                    <a href="{% url 'salon_list' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
-                        🎵 Accéder aux Salons
+                    <a href="{% url 'salon_list' %}" 
+                       class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
+                        Accéder aux Salons
                     </a>
-                    <a href="{% url 'quiz_home' %}" class="bg-harmony-secondary hover:bg-opacity-80 px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
-                        🎲 Jouer au Quiz
+                    <a href="{% url 'quiz_home' %}" 
+                       class="bg-harmony-secondary hover:bg-opacity-80 px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
+                        Jouer au Quiz
                     </a>
                 </div>
             {% else %}
                 <div class="space-x-4">
-                    <a href="{% url 'register' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
+                    <a href="{% url 'register' %}" 
+                       class="bg-harmony-red hover:bg-opacity-80 px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
                         Rejoindre Harmony
                     </a>
-                    <a href="{% url 'login' %}" class="bg-harmony-secondary hover:bg-opacity-80 px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
+                    <a href="{% url 'login' %}" 
+                       class="bg-harmony-secondary hover:bg-opacity-80 px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
                         Se connecter
                     </a>
                 </div>
@@ -40,7 +55,7 @@
 </div>
 
 <!-- Features Section -->
-<div class="bg-harmony-secondary py-24">
+<div class="bg-harmony-bg py-24 border-t border-harmony-title">
     <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-harmony-title text-center mb-16">Fonctionnalités</h2>
         

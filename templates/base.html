@@ -23,7 +23,7 @@
                     colors: {
                         'harmony-bg': '#1a1a1a',
                         'harmony-title': '#dd695a',
-                        'harmony-secondary': '#2e2e30',
+                        'harmony-secondary': '#1e1e1e',
                         'harmony-red': '#ba332f',
                         'harmony-red-dark': '#8d2627',
                         'harmony-deep': '#6d1c1d',
@@ -61,7 +61,7 @@
 <body class="bg-harmony-bg text-white">
     {% include 'navbar.html' %}
     
-    <div class="flex mb-32">
+    <div class="flex">
         {% if user.is_authenticated and request.path|slice:":8" == "/salons/" %}
             {% include 'sidebar.html' %}
         {% endif %}

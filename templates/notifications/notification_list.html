@@ -9,7 +9,7 @@
     {% if notifications %}
         <div class="space-y-4">
             {% for notification in notifications %}
-                <div class="bg-harmony-secondary p-6 rounded-lg shadow-lg {% if notification.est_recente %}border-2 border-harmony-red{% endif %}">
+                <div class="bg-harmony-secondary p-6 rounded-lg border border-harmony-title {% if notification.est_recente %}border-2 border-harmony-red{% endif %}">
                     <div class="flex items-start justify-between mb-3">
                         <h2 class="text-xl font-bold text-white">{{ notification.titre }}</h2>
                         {% if notification.est_recente %}

@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12 max-w-4xl">
-    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
+    <div class="bg-harmony-secondary p-8 rounded-lg border border-harmony-title">
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-3xl font-bold text-harmony-title">Mon Profil</h1>
             <a href="{% url 'edit_profile' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-6 py-2 rounded-lg transition">
@@ -22,14 +22,14 @@
                     </div>
                 {% endif %}
                 
-                <h2 class="text-2xl font-bold mt-4">{{ user.username }}</h2>
+                <h2 class="text-2xl font-bold mt-4 capitalize">{{ user.username }}</h2>
                 <p class="text-gray-400">{{ user.email }}</p>
             </div>
             
             <div class="md:col-span-2 space-y-6">
                 <div>
                     <h3 class="text-harmony-title font-semibold mb-2">Biographie</h3>
-                    <p class="text-gray-300">{{ profile.bio|default:"Aucune biographie" }}</p>
+                    <p class="text-gray-300">{{ profile.bio|capfirst|default:"Aucune biographie" }}</p>
                 </div>
                 
                 <div>
@@ -39,7 +39,7 @@
                 
                 <div>
                     <h3 class="text-harmony-title font-semibold mb-2">Préférences musicales</h3>
-                    <p class="text-gray-300">{{ profile.preferences_musicales|default:"Non renseignées" }}</p>
+                    <p class="text-gray-300">{{ profile.preferences_musicales|capfirst|default:"Non renseignées" }}</p>
                 </div>
                 
                 <div>

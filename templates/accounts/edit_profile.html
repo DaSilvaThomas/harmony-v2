@@ -4,30 +4,57 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12 max-w-2xl">
-    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-harmony-title mb-6">Modifier mon profil</h1>
-        
-        <form method="post" enctype="multipart/form-data" class="space-y-6">
+    <div class="gradient-card p-8 rounded-lg shadow-2xl">
+        <h1 class="text-3xl font-bold text-white mb-6 text-center">Modifier mon profil</h1>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6" id="edit-profile-form">
             {% csrf_token %}
-            
+
             {% for field in form %}
                 <div>
-                    <label for="{{ field.id_for_label }}" class="block mb-2 font-semibold">{{ field.label }}</label>
-                    {{ field }}
+                    <label for="{{ field.id_for_label }}" class="block mb-2 font-semibold text-white">{{ field.label }}</label>
+
+                    {% if field.name == "photo" %}
+                        <div id="photo-container">
+                            <!-- Preview de l'image existante -->
+                            {% if field.value %}
+                                <div id="current-photo" class="mb-2 flex items-center space-x-4">
+                                    <img src="{{ field.value.url }}" alt="Photo actuelle" class="w-24 h-24 rounded-full object-cover border-2 border-harmony-red">
+                                    <label id="remove-photo-label" class="cursor-pointer bg-white hover:bg-opacity-80 text-harmony-red px-3 py-1 rounded-lg font-bold transition border border-harmony-red">
+                                        Supprimer la photo
+                                    </label>
+                                    <input type="checkbox" name="photo-clear" id="id_photo_remove" class="hidden">
+                                </div>
+                            {% endif %}
+
+                            <!-- Champ upload stylé -->
+                            <div>
+                                <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" class="hidden" accept="image/*">
+                                <label for="{{ field.id_for_label }}"
+                                       class="cursor-pointer w-full text-center bg-white/10 border border-white/20 text-white py-3 rounded-lg hover:bg-white/20 transition block">
+                                    Choisir une nouvelle photo
+                                </label>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+
                     {% if field.help_text %}
-                        <p class="text-gray-400 text-sm mt-1">{{ field.help_text }}</p>
+                        <p class="text-gray-300 text-sm mt-1">{{ field.help_text }}</p>
                     {% endif %}
                     {% if field.errors %}
                         <p class="text-red-400 text-sm mt-1">{{ field.errors.0 }}</p>
                     {% endif %}
                 </div>
             {% endfor %}
-            
+
             <div class="flex space-x-4">
-                <button type="submit" class="bg-harmony-red hover:bg-harmony-red-dark px-6 py-3 rounded-lg transition">
+                <button type="submit" class="bg-white text-harmony-red hover:bg-opacity-90 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition">
                     Enregistrer
                 </button>
-                <a href="{% url 'profile' %}" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg transition">
+                <a href="{% url 'profile' %}" class="bg-harmony-deep hover:bg-opacity-80 font-bold px-6 py-3 rounded-lg transition text-white">
                     Annuler
                 </a>
             </div>
@@ -36,18 +63,73 @@
 </div>
 
 <style>
-    input[type="text"], input[type="date"], input[type="file"], textarea, select {
-        width: 100%;
-        padding: 0.75rem;
-        border-radius: 0.5rem;
-        background-color: #1a1a1a;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: white;
-    }
-    
-    input:focus, textarea:focus {
-        outline: none;
-        border-color: #dd695a;
-    }
+/* Inputs généraux */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1); /* overlay flou */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById("id_photo");
+    const currentPhoto = document.getElementById("current-photo");
+    const removePhotoCheckbox = document.getElementById("id_photo_remove");
+    const removePhotoLabel = document.getElementById("remove-photo-label");
+
+    // Afficher un aperçu de la nouvelle photo
+    fileInput.addEventListener("change", function() {
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let preview = document.getElementById("photo-preview");
+                if (!preview) {
+                    preview = document.createElement("img");
+                    preview.id = "photo-preview";
+                    preview.className = "w-24 h-24 rounded-full object-cover border-2 border-harmony-red mb-2";
+                    currentPhoto ? currentPhoto.replaceWith(preview) : document.getElementById("photo-container").prepend(preview);
+                }
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+            // décocher "supprimer photo" si coché
+            if (removePhotoCheckbox) removePhotoCheckbox.checked = false;
+            if (currentPhoto) currentPhoto.style.display = "none";
+        }
+    });
+
+    // Supprimer la photo immédiatement
+    if (removePhotoLabel) {
+        removePhotoLabel.addEventListener("click", function() {
+            if (currentPhoto) currentPhoto.style.display = "none";
+            removePhotoCheckbox.checked = true;
+            // Supprime l'aperçu si une nouvelle photo était déjà choisie
+            const preview = document.getElementById("photo-preview");
+            if (preview) preview.remove();
+            fileInput.value = "";
+        });
+    }
+});
+</script>
 {% endblock %}
