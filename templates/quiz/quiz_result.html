@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Résultats - Quiz - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+    <div class="text-center mb-12">
+        <div class="gradient-card p-12 rounded-lg shadow-2xl inline-block">
+            <h1 class="text-5xl font-bold text-white mb-4">Quiz Terminé !</h1>
+            <p class="text-6xl font-bold text-white mb-2">{{ score }} / {{ total_questions|multiply:10 }}</p>
+            <p class="text-xl text-gray-200">
+                {% widthratio score total_questions|multiply:10 100 %}% de bonnes réponses
+            </p>
+        </div>
+    </div>
+    
+    <!-- Détails des réponses -->
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg mb-8">
+        <h2 class="text-2xl font-semibold text-harmony-title mb-6">Détails des Réponses</h2>
+        <div class="space-y-4">
+            {% for answer in answers %}
+                <div class="p-4 rounded-lg {% if answer.correct %}bg-green-900/30 border-2 border-green-500{% else %}bg-red-900/30 border-2 border-red-500{% endif %}">
+                    <div class="flex items-start justify-between mb-2">
+                        <h3 class="font-semibold flex-1">{{ answer.question.question }}</h3>
+                        <span class="ml-4">
+                            {% if answer.correct %}
+                                <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            {% else %}
+                                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="text-sm">
+                        <p class="text-gray-300 mb-1">Votre réponse: <span class="{% if answer.correct %}text-green-400{% else %}text-red-400{% endif %}">{{ answer.user_answer }}</span></p>
+                        {% if not answer.correct %}
+                            <p class="text-gray-300">Bonne réponse: <span class="text-green-400">{{ answer.question.bonne_reponse }}</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="text-center space-x-4">
+        {% if theme %}
+            <a href="{% url 'quiz_play' theme.id %}" class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-4 rounded-lg font-bold transition inline-block">
+                Rejouer ce thème
+            </a>
+            <a href="{% url 'quiz_theme' theme.id %}" class="bg-harmony-secondary hover:bg-opacity-80 px-8 py-4 rounded-lg font-bold transition inline-block">
+                Voir les scores
+            </a>
+        {% else %}
+            <a href="{% url 'quiz_play_random' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-4 rounded-lg font-bold transition inline-block">
+                Rejouer
+            </a>
+        {% endif %}
+        <a href="{% url 'quiz_home' %}" class="bg-gray-600 hover:bg-gray-700 px-8 py-4 rounded-lg font-bold transition inline-block">
+            Retour à l'accueil
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Salons - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-harmony-title mb-8">Salons Musicaux</h1>
+    
+    <!-- Salons Communautaires -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-white mb-6">Salons Communautaires</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for salon in salons_communautaires %}
+                <a href="{% url 'salon_detail' salon.id %}" class="gradient-card p-6 rounded-lg shadow-lg hover:scale-105 transition transform">
+                    {% if salon.image %}
+                        <img src="{{ salon.image.url }}" alt="{{ salon.nom }}" class="w-full h-48 object-cover rounded-lg mb-4">
+                    {% else %}
+                        <div class="w-full h-48 bg-harmony-deep rounded-lg mb-4 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                    {% endif %}
+                    
+                    <h3 class="text-xl font-bold text-white mb-2">{{ salon.nom }}</h3>
+                    <p class="text-gray-200 text-sm mb-4">{{ salon.description|truncatewords:15 }}</p>
+                    
+                    <div class="flex items-center justify-between text-sm text-gray-200">
+                        <span>{{ salon.membres.count }} membre{{ salon.membres.count|pluralize }}</span>
+                        <span>{{ salon.messages.count }} message{{ salon.messages.count|pluralize }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="text-gray-400 col-span-3">Aucun salon communautaire disponible.</p>
+            {% endfor %}
+        </div>
+    </section>
+    
+    <!-- Salons Thématiques -->
+    <section>
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-white">Salons Thématiques</h2>
+            <a href="{% url 'create_salon' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-6 py-3 rounded-lg transition">
+                + Créer un salon
+            </a>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for salon in salons_thematiques %}
+                <a href="{% url 'salon_detail' salon.id %}" class="bg-harmony-secondary p-6 rounded-lg shadow-lg hover:bg-opacity-80 transition border-2 border-harmony-red">
+                    {% if salon.image %}
+                        <img src="{{ salon.image.url }}" alt="{{ salon.nom }}" class="w-full h-48 object-cover rounded-lg mb-4">
+                    {% else %}
+                        <div class="w-full h-48 bg-harmony-bg rounded-lg mb-4 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-harmony-title" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                    {% endif %}
+                    
+                    <h3 class="text-xl font-bold text-white mb-2">{{ salon.nom }}</h3>
+                    <p class="text-gray-300 text-sm mb-4">{{ salon.description|truncatewords:15 }}</p>
+                    
+                    <div class="flex items-center justify-between text-sm text-gray-300">
+                        <span>Par {{ salon.owner.username }}</span>
+                        <span>{{ salon.membres.count }} membre{{ salon.membres.count|pluralize }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="text-gray-400 col-span-3">Aucun salon thématique disponible.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

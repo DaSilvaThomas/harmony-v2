@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Harmony - The Sound of Us{% endblock %}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'harmony-bg': '#1a1a1a',
+                        'harmony-title': '#dd695a',
+                        'harmony-secondary': '#2e2e30',
+                        'harmony-red': '#ba332f',
+                        'harmony-red-dark': '#8d2627',
+                        'harmony-deep': '#6d1c1d',
+                        'harmony-orange': '#c65336',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        .gradient-card {
+            background: linear-gradient(135deg, #ba332f 0%, #8d2627 100%);
+        }
+        
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+        
+        .blink {
+            animation: blink 1.5s infinite;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-harmony-bg text-white">
+    {% include 'navbar.html' %}
+    
+    <div class="flex mb-32">
+        {% if user.is_authenticated and request.path|slice:":8" == "/salons/" %}
+            {% include 'sidebar.html' %}
+        {% endif %}
+        
+        <main class="flex-1 overflow-y-auto">
+            {% if messages %}
+                <div class="container mx-auto px-4 py-4">
+                    {% for message in messages %}
+                        <div class="bg-harmony-secondary border-l-4 {% if message.tags == 'error' %}border-red-500{% elif message.tags == 'success' %}border-green-500{% else %}border-blue-500{% endif %} p-4 mb-4 rounded">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    
+    {% block extra_js %}{% endblock %}
+    {% include 'footer.html' %}
+</body>
+</html>

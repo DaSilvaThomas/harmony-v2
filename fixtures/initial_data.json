@@ -1,0 +1,299 @@
+[
+  {
+    "model": "accounts.customuser",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "email": "admin@harmony.com",
+      "is_staff": true,
+      "is_superuser": true,
+      "password": "pbkdf2_sha256$600000$DUMMY_HASH"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 1,
+    "fields": {
+      "nom": "Générations 80-90",
+      "type": "communautaire",
+      "description": "Replongez dans les hits inoubliables des années 80 et 90. Nostalgie garantie !",
+      "owner": 1,
+      "date_creation": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 2,
+    "fields": {
+      "nom": "Collectif Musique & Patrimoine",
+      "type": "communautaire",
+      "description": "Explorez la richesse du patrimoine musical mondial. Partagez vos découvertes !",
+      "owner": 1,
+      "date_creation": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 3,
+    "fields": {
+      "nom": "Chorale virtuelle Harmony",
+      "type": "communautaire",
+      "description": "Chantez ensemble, partagez vos performances vocales et découvrez l'harmonie collective.",
+      "owner": 1,
+      "date_creation": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 4,
+    "fields": {
+      "nom": "Les musiques qui nous relient",
+      "type": "thematique",
+      "description": "Un espace pour partager les morceaux qui ont marqué nos vies et créé des liens.",
+      "owner": 1,
+      "date_creation": "2024-01-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 5,
+    "fields": {
+      "nom": "Sounds of Origins",
+      "type": "thematique",
+      "description": "Découvrez les racines musicales du monde entier, des traditions ancestrales aux influences contemporaines.",
+      "owner": 1,
+      "date_creation": "2024-01-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 6,
+    "fields": {
+      "nom": "Mémoires sonores du monde",
+      "type": "thematique",
+      "description": "Explorez les sons qui ont façonné l'histoire et les cultures à travers les continents.",
+      "owner": 1,
+      "date_creation": "2024-01-20T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 7,
+    "fields": {
+      "nom": "OST & Cinéma",
+      "type": "thematique",
+      "description": "Plongez dans l'univers des bandes originales de films. Les musiques qui font vibrer le 7ème art.",
+      "owner": 1,
+      "date_creation": "2024-01-20T00:00:00Z"
+    }
+  },
+  {
+    "model": "salons.salon",
+    "pk": 8,
+    "fields": {
+      "nom": "Nouveautés & Tendances",
+      "type": "thematique",
+      "description": "Restez à la pointe de l'actualité musicale. Découvrez les nouveaux talents et tendances émergentes.",
+      "owner": 1,
+      "date_creation": "2024-01-25T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.quiztheme",
+    "pk": 1,
+    "fields": {
+      "nom": "Pop",
+      "description": "Testez vos connaissances sur les plus grands hits pop internationaux !",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.quiztheme",
+    "pk": 2,
+    "fields": {
+      "nom": "Rock",
+      "description": "Du rock classique au rock alternatif, prouvez que vous êtes un vrai rocker !",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.quiztheme",
+    "pk": 3,
+    "fields": {
+      "nom": "Musiques du monde",
+      "description": "Voyage musical à travers les continents. Connaissez-vous les sons du monde entier ?",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.quiztheme",
+    "pk": 4,
+    "fields": {
+      "nom": "OST",
+      "description": "Les bandes originales les plus emblématiques du cinéma. Action !",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.quiztheme",
+    "pk": 5,
+    "fields": {
+      "nom": "Électro",
+      "description": "De la house à la techno, en passant par l'EDM. Êtes-vous branché électro ?",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 1,
+    "fields": {
+      "theme": 1,
+      "type": "texte",
+      "question": "Qui a chanté 'Thriller' en 1982 ?",
+      "bonne_reponse": "Michael Jackson",
+      "mauvaises_reponses": "[\"Prince\", \"Stevie Wonder\", \"James Brown\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 2,
+    "fields": {
+      "theme": 1,
+      "type": "texte",
+      "question": "Quel groupe britannique a sorti l'album 'A Night at the Opera' en 1975 ?",
+      "bonne_reponse": "Queen",
+      "mauvaises_reponses": "[\"The Beatles\", \"The Rolling Stones\", \"Led Zeppelin\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 3,
+    "fields": {
+      "theme": 1,
+      "type": "texte",
+      "question": "Quelle chanteuse est surnommée 'The Queen of Pop' ?",
+      "bonne_reponse": "Madonna",
+      "mauvaises_reponses": "[\"Britney Spears\", \"Lady Gaga\", \"Beyoncé\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 4,
+    "fields": {
+      "theme": 2,
+      "type": "texte",
+      "question": "Quel groupe a composé 'Stairway to Heaven' ?",
+      "bonne_reponse": "Led Zeppelin",
+      "mauvaises_reponses": "[\"Deep Purple\", \"Black Sabbath\", \"Pink Floyd\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 5,
+    "fields": {
+      "theme": 2,
+      "type": "texte",
+      "question": "Qui est le chanteur du groupe Nirvana ?",
+      "bonne_reponse": "Kurt Cobain",
+      "mauvaises_reponses": "[\"Eddie Vedder\", \"Chris Cornell\", \"Dave Grohl\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 6,
+    "fields": {
+      "theme": 3,
+      "type": "texte",
+      "question": "De quel pays vient le style musical 'Reggae' ?",
+      "bonne_reponse": "Jamaïque",
+      "mauvaises_reponses": "[\"Cuba\", \"Brésil\", \"Afrique du Sud\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 7,
+    "fields": {
+      "theme": 3,
+      "type": "texte",
+      "question": "Quel instrument traditionnel japonais ressemble à une cithare ?",
+      "bonne_reponse": "Koto",
+      "mauvaises_reponses": "[\"Shamisen\", \"Biwa\", \"Shakuhachi\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 8,
+    "fields": {
+      "theme": 4,
+      "type": "texte",
+      "question": "Qui a composé la bande originale du film 'Le Parrain' ?",
+      "bonne_reponse": "Nino Rota",
+      "mauvaises_reponses": "[\"Ennio Morricone\", \"John Williams\", \"Hans Zimmer\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 9,
+    "fields": {
+      "theme": 4,
+      "type": "texte",
+      "question": "Quelle est la bande originale la plus vendue de tous les temps ?",
+      "bonne_reponse": "The Bodyguard",
+      "mauvaises_reponses": "[\"Titanic\", \"Star Wars\", \"The Lion King\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 10,
+    "fields": {
+      "theme": 5,
+      "type": "texte",
+      "question": "Quel DJ français a composé 'Around the World' ?",
+      "bonne_reponse": "Daft Punk",
+      "mauvaises_reponses": "[\"David Guetta\", \"Justice\", \"Martin Solveig\"]",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 1,
+    "fields": {
+      "titre": "Bienvenue sur Harmony !",
+      "contenu": "Nous sommes ravis de vous accueillir dans notre communauté musicale. Explorez les salons, participez aux quiz et partagez votre passion pour la musique !",
+      "date_publication": "2024-01-01T00:00:00Z",
+      "visible": true,
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 2,
+    "fields": {
+      "titre": "Nouveau thème de quiz : Électro",
+      "contenu": "Un nouveau thème de quiz est disponible ! Testez vos connaissances sur la musique électronique et grimpez dans le classement.",
+      "date_publication": "2024-01-15T00:00:00Z",
+      "visible": true,
+      "created_at": "2024-01-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": 3,
+    "fields": {
+      "titre": "Salon thématique OST & Cinéma",
+      "contenu": "Rejoignez notre nouveau salon dédié aux bandes originales de films. Partagez vos OST préférées et découvrez de nouveaux chefs-d'œuvre musicaux du cinéma !",
+      "date_publication": "2024-01-20T00:00:00Z",
+      "visible": true,
+      "created_at": "2024-01-20T00:00:00Z"
+    }
+  }
+]

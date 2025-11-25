@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Notifications - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+    <h1 class="text-4xl font-bold text-harmony-title mb-8">Notifications</h1>
+    
+    {% if notifications %}
+        <div class="space-y-4">
+            {% for notification in notifications %}
+                <div class="bg-harmony-secondary p-6 rounded-lg shadow-lg {% if notification.est_recente %}border-2 border-harmony-red{% endif %}">
+                    <div class="flex items-start justify-between mb-3">
+                        <h2 class="text-xl font-bold text-white">{{ notification.titre }}</h2>
+                        {% if notification.est_recente %}
+                            <span class="bg-harmony-red px-3 py-1 rounded-full text-xs font-bold">NOUVEAU</span>
+                        {% endif %}
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4">{{ notification.contenu }}</p>
+                    
+                    <div class="flex items-center text-sm text-gray-400">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Publié le {{ notification.date_publication|date:"d/m/Y à H:i" }}</span>
+                        {% if notification.date_expiration %}
+                            <span class="ml-4">• Expire le {{ notification.date_expiration|date:"d/m/Y" }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="bg-harmony-secondary p-12 rounded-lg shadow-lg text-center">
+            <svg class="w-16 h-16 text-gray-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+            </svg>
+            <p class="text-gray-400 text-lg">Aucune notification pour le moment</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

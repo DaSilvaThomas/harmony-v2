@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Quiz en cours - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-3xl">
+    <!-- Progression -->
+    <div class="mb-8">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-white font-semibold">Question {{ current_index }} / {{ total_questions }}</span>
+            <span class="text-harmony-title font-bold">Score: {{ score }} pts</span>
+        </div>
+        <div class="w-full bg-harmony-secondary rounded-full h-3">
+            <div class="bg-harmony-red h-3 rounded-full transition-all" style="width: {{ current_index|multiply:100|divide:total_questions }}%"></div>
+        </div>
+    </div>
+    
+    <!-- Question -->
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
+        <div class="mb-8">
+            {% if question.type == 'audio' and question.audio_file %}
+                <div class="mb-6 text-center">
+                    <svg class="w-16 h-16 text-harmony-title mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                    </svg>
+                    <audio controls class="w-full max-w-md mx-auto">
+                        <source src="{{ question.audio_file.url }}" type="audio/mpeg">
+                    </audio>
+                </div>
+            {% endif %}
+            
+            <h2 class="text-2xl font-bold text-white text-center mb-8">{{ question.question }}</h2>
+        </div>
+        
+        <!-- Réponses -->
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            
+            {% for answer in answers %}
+                <button type="submit" name="answer" value="{{ answer }}" class="w-full p-4 bg-harmony-bg hover:bg-harmony-red transition rounded-lg text-left font-semibold">
+                    {{ answer }}
+                </button>
+            {% endfor %}
+        </form>
+    </div>
+</div>
+
+<style>
+    [type='submit']:hover {
+        transform: translateX(8px);
+    }
+</style>
+{% endblock %}

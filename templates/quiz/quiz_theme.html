@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ theme.nom }} - Quiz - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-4xl">
+    <div class="gradient-card p-8 rounded-lg shadow-lg mb-8">
+        <h1 class="text-4xl font-bold text-white mb-4">{{ theme.nom }}</h1>
+        <p class="text-gray-200 text-lg mb-6">{{ theme.description }}</p>
+        
+        <div class="flex items-center justify-between">
+            <p class="text-white">
+                <span class="font-bold">{{ question_count }}</span> question{{ question_count|pluralize }} disponible{{ question_count|pluralize }}
+            </p>
+            <a href="{% url 'quiz_play' theme.id %}" class="bg-white text-harmony-red hover:bg-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition">
+                🎮 Lancer le quiz
+            </a>
+        </div>
+    </div>
+    
+    <!-- Scores du thème -->
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold text-harmony-title mb-6">🏆 Meilleurs Scores</h2>
+        {% if scores %}
+            <div class="space-y-3">
+                {% for score in scores %}
+                    <div class="flex items-center justify-between p-4 bg-harmony-bg rounded {% if forloop.counter == 1 %}border-2 border-yellow-500{% elif forloop.counter == 2 %}border-2 border-gray-400{% elif forloop.counter == 3 %}border-2 border-orange-600{% endif %}">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-2xl font-bold text-harmony-title">{{ forloop.counter }}</span>
+                            <div>
+                                <span class="font-semibold">{{ score.user.username }}</span>
+                                <p class="text-xs text-gray-400">{{ score.date|date:"d/m/Y" }}</p>
+                            </div>
+                        </div>
+                        <span class="text-harmony-title font-bold text-xl">{{ score.points_total }} pts</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-400 text-center">Soyez le premier à jouer à ce quiz !</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

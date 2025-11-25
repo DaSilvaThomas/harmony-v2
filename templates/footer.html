@@ -1,0 +1,51 @@
+<footer class="bg-harmony-secondary text-white py-6 mt-8 border-t border-harmony-red">
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Logo & slogan -->
+        <div class="flex flex-col items-start">
+            <h2 class="text-2xl font-bold text-harmony-title">Harmony</h2>
+            <p class="mt-2 text-sm text-gray-300">The Sound of Us</p>
+        </div>
+
+        <!-- Liens utiles -->
+        <div class="flex flex-col">
+            <h3 class="font-semibold text-lg mb-2">Liens</h3>
+            <ul class="space-y-1">
+                <li><a href="{% url 'home' %}" class="hover:text-harmony-title">Accueil</a></li>
+                <li><a href="{% url 'salon_list' %}" class="hover:text-harmony-title">Salons</a></li>
+                <li><a href="{% url 'quiz_home' %}" class="hover:text-harmony-title">Quiz</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}" class="hover:text-harmony-title">Profil</a></li>
+                {% endif %}
+                <li><a href="{% url 'contact' %}" class="hover:text-harmony-title">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Réseaux sociaux -->
+        <div class="flex flex-col">
+            <h3 class="font-semibold text-lg mb-2">Suivez-nous</h3>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-harmony-title" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M22 12.07c0-5.52-4.48-10-10-10S2 6.55 2 12.07c0 5 3.66 9.13 8.44 9.88v-6.99h-2.54v-2.89h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.89h-2.34v6.99C18.34 21.2 22 17.07 22 12.07z"/>
+                    </svg>
+                </a>
+                <a href="#" class="hover:text-harmony-title" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M22.46 6c-.77.34-1.6.57-2.46.68a4.3 4.3 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04 4.28 4.28 0 00-7.3 3.9A12.13 12.13 0 013 5.16a4.28 4.28 0 001.32 5.7 4.27 4.27 0 01-1.94-.54v.05a4.28 4.28 0 003.43 4.2 4.3 4.3 0 01-1.93.07 4.28 4.28 0 003.99 2.97 8.59 8.59 0 01-5.32 1.83A8.66 8.66 0 012 19.54a12.14 12.14 0 006.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19-.01-.39-.02-.58A8.73 8.73 0 0024 5.64a8.46 8.46 0 01-2.54.7z"/>
+                    </svg>
+                </a>
+                <a href="#" class="hover:text-harmony-title" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.054 1.96.24 2.42.402a4.92 4.92 0 011.77 1.04c.502.502.81 1.05 1.04 1.77.162.46.348 1.25.402 2.42.058 1.27.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.24 1.96-.402 2.42a4.92 4.92 0 01-1.04 1.77c-.502.502-1.05.81-1.77 1.04-.46.162-1.25.348-2.42.402-1.27.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.96-.24-2.42-.402a4.92 4.92 0 01-1.77-1.04 4.92 4.92 0 01-1.04-1.77c-.162-.46-.348-1.25-.402-2.42-.058-1.27-.07-1.65-.07-4.85s.012-3.584.07-4.85c.054-1.17.24-1.96.402-2.42a4.92 4.92 0 011.04-1.77c.502-.502 1.05-.81 1.77-1.04.46-.162 1.25-.348 2.42-.402C8.416 2.172 8.8 2.16 12 2.16zm0-2.16C8.735 0 8.332.012 7.052.07 5.773.128 4.89.308 4.128.55 3.34.798 2.667 1.16 2.03 1.8c-.636.637-1.002 1.31-1.25 2.098-.242.762-.422 1.645-.48 2.924C.012 8.332 0 8.735 0 12s.012 3.668.07 4.948c.058 1.28.238 2.162.48 2.924.248.788.614 1.461 1.25 2.098.637.636 1.31 1.002 2.098 1.25.762.242 1.645.422 2.924.48 1.28.058 1.683.07 4.948.07s3.668-.012 4.948-.07c1.28-.058 2.162-.238 2.924-.48.788-.248 1.461-.614 2.098-1.25.636-.637 1.002-1.31 1.25-2.098.242-.762.422-1.645.48-2.924.058-1.28.07-1.683.07-4.948s-.012-3.668-.07-4.948c-.058-1.28-.238-2.162-.48-2.924-.248-.788-.614-1.461-1.25-2.098-.637-.636-1.31-1.002-2.098-1.25-.762-.242-1.645-.422-2.924-.48C15.668.012 15.265 0 12 0z"/>
+                        <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a3.999 3.999 0 110-7.998 3.999 3.999 0 010 7.998zM18.406 4.594a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center text-gray-400 text-sm mt-6">
+        &copy; {{ now|date:"Y" }} Harmony. Tous droits réservés.
+    </div>
+</footer>

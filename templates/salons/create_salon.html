@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer un salon - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-2xl">
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-harmony-title mb-6">Créer un salon thématique</h1>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            <div>
+                <label for="{{ form.nom.id_for_label }}" class="block mb-2 font-semibold">Nom du salon</label>
+                {{ form.nom }}
+                {% if form.nom.errors %}
+                    <p class="text-red-400 text-sm mt-1">{{ form.nom.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <div>
+                <label for="{{ form.description.id_for_label }}" class="block mb-2 font-semibold">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="text-red-400 text-sm mt-1">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <div>
+                <label for="{{ form.image.id_for_label }}" class="block mb-2 font-semibold">Image (optionnelle)</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <p class="text-red-400 text-sm mt-1">{{ form.image.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-harmony-red hover:bg-harmony-red-dark px-6 py-3 rounded-lg transition">
+                    Créer le salon
+                </button>
+                <a href="{% url 'salon_list' %}" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg transition">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    input[type="text"], input[type="file"], textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background-color: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #dd695a;
+    }
+</style>
+{% endblock %}

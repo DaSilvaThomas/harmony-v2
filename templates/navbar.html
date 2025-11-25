@@ -1,0 +1,75 @@
+{% load static %}
+
+<nav class="bg-harmony-secondary border-b border-harmony-red" 
+    x-data="{ 
+        notificationsOpen: false,
+        hasRecent: false,
+        checkNotifications() {
+            fetch('/notifications/check/')
+                .then(r => r.json())
+                .then(data => {
+                    this.hasRecent = data.has_recent;
+                });
+        }
+    }" 
+    x-init="checkNotifications(); setInterval(() => checkNotifications(), 30000)">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center space-x-8">
+                <a href="{% url 'home' %}" class="flex items-center space-x-2">
+                    <img src="{% static 'images/logo.jpg' %}" alt="Harmony Logo" class="h-10 w-10 rounded-full">
+                    <span class="text-harmony-title text-2xl font-bold">Harmony</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="{% url 'home' %}" class="hover:text-harmony-title transition font-bold">Accueil</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'salon_list' %}" class="hover:text-harmony-title transition font-bold">Salons</a>
+                        <a href="{% url 'quiz_home' %}" class="hover:text-harmony-title transition font-bold">Mini-jeu</a>
+                    {% endif %}
+                    <a href="{% url 'about' %}" class="hover:text-harmony-title transition font-bold">À propos</a>
+                    <a href="{% url 'contact' %}" class="hover:text-harmony-title transition font-bold">Contact</a>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <!-- Notifications -->
+                    <div class="relative">
+                        <a href="{% url 'notification_list' %}" class="relative hover:text-harmony-title transition">
+                            <svg class="w-6 h-6" :class="{ 'blink text-harmony-title': hasRecent }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                            <span x-show="hasRecent" class="absolute -top-1 -right-1 bg-red-500 rounded-full w-3 h-3"></span>
+                        </a>
+                    </div>
+                    
+                    <!-- User Menu -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="flex items-center space-x-2 hover:text-harmony-title transition">
+                            <span class="capitalize">{{ user.username }}</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            {% if profile.photo %}
+                                <img src="{{ profile.photo.url }}" alt="{{ user.username }}" class="w-10 h-10 rounded-full mx-auto object-cover border-2 border-harmony-red">
+                            {% else %}
+                                <div class="w-10 h-10 rounded-full mx-auto bg-harmony-red flex items-center justify-center text-lg font-bold">
+                                    {{ user.username.0|upper }}
+                                </div>
+                            {% endif %}
+                        </button>
+                        
+                        <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-harmony-secondary rounded-lg shadow-lg py-2 z-50">
+                            <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-harmony-bg">Mon compte</a>
+                            <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-harmony-bg">Déconnexion</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:text-harmony-title transition">Connexion</a>
+                    <a href="{% url 'register' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-4 py-2 rounded-lg transition">Inscription</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

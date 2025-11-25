@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-3xl">
+    <h1 class="text-4xl font-bold text-harmony-title mb-8">Contactez-nous</h1>
+    
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg mb-8">
+        <p class="text-gray-300 leading-relaxed mb-6">
+            Vous avez une question, une suggestion ou souhaitez simplement nous faire part de vos 
+            commentaires ? N'hésitez pas à nous contacter. L'équipe Harmony est à votre écoute !
+        </p>
+        
+        <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+                <div class="gradient-card p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-1">Email</h3>
+                    <a href="mailto:contact@harmony-music.com" class="text-harmony-title hover:underline">
+                        contact@harmony-music.com
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+                <div class="gradient-card p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-1">Réseaux Sociaux</h3>
+                    <p class="text-gray-300">Suivez-nous sur nos réseaux sociaux pour rester informé de nos actualités.</p>
+                </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+                <div class="gradient-card p-3 rounded-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-1">Support</h3>
+                    <p class="text-gray-300">Pour toute question technique, consultez notre FAQ ou contactez notre support.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-white mb-6">Envoyez-nous un message</h2>
+        
+        <form class="space-y-6" x-data="{ submitted: false }" @submit.prevent="submitted = true">
+            <div>
+                <label for="name" class="block mb-2 font-semibold">Nom</label>
+                <input type="text" id="name" required class="w-full px-4 py-3 bg-harmony-bg border border-gray-700 rounded-lg focus:outline-none focus:border-harmony-title text-white">
+            </div>
+            
+            <div>
+                <label for="email" class="block mb-2 font-semibold">Email</label>
+                <input type="email" id="email" required class="w-full px-4 py-3 bg-harmony-bg border border-gray-700 rounded-lg focus:outline-none focus:border-harmony-title text-white">
+            </div>
+            
+            <div>
+                <label for="subject" class="block mb-2 font-semibold">Sujet</label>
+                <input type="text" id="subject" required class="w-full px-4 py-3 bg-harmony-bg border border-gray-700 rounded-lg focus:outline-none focus:border-harmony-title text-white">
+            </div>
+            
+            <div>
+                <label for="message" class="block mb-2 font-semibold">Message</label>
+                <textarea id="message" rows="6" required class="w-full px-4 py-3 bg-harmony-bg border border-gray-700 rounded-lg focus:outline-none focus:border-harmony-title text-white"></textarea>
+            </div>
+            
+            <div x-show="!submitted">
+                <button type="submit" class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-3 rounded-lg font-bold transition">
+                    Envoyer le message
+                </button>
+            </div>
+            
+            <div x-show="submitted" class="bg-green-900/30 border-2 border-green-500 p-4 rounded-lg">
+                <p class="text-green-400 font-semibold">✓ Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.</p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

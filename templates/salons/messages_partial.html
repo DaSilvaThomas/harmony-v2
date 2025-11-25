@@ -1,0 +1,20 @@
+{% for message in messages %}
+    <div class="flex space-x-3">
+        <div class="flex-shrink-0">
+            {% if message.user.profile.photo %}
+                <img src="{{ message.user.profile.photo.url }}" alt="{{ message.user.username }}" class="w-10 h-10 rounded-full">
+            {% else %}
+                <div class="w-10 h-10 rounded-full bg-harmony-red flex items-center justify-center font-bold">
+                    {{ message.user.username.0|upper }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="flex-1">
+            <div class="flex items-baseline space-x-2">
+                <span class="font-bold">{{ message.user.username }}</span>
+                <span class="text-xs text-gray-400">{{ message.timestamp|date:"H:i" }}</span>
+            </div>
+            <p class="text-gray-300 mt-1">{{ message.contenu }}</p>
+        </div>
+    </div>
+{% endfor %}

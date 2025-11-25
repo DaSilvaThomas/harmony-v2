@@ -1,0 +1,11 @@
+# Django
+# db.sqlite3
+# db.sqlite3-journal
+
+# Environnement virtuel
+venv/
+ENV/
+env/
+
+# Uploads
+# uploads/*

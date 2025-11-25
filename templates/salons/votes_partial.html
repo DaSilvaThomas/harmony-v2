@@ -1,0 +1,15 @@
+{% if voted_tracks %}
+    <div class="space-y-3">
+        {% for item in voted_tracks %}
+            <div class="bg-harmony-bg p-3 rounded">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="font-semibold text-sm">{{ item.track.titre }}</p>
+                    <span class="bg-harmony-red px-2 py-1 rounded text-xs">{{ item.count }} vote{{ item.count|pluralize }}</span>
+                </div>
+                <p class="text-xs text-gray-400">{{ item.track.artiste }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-gray-400 text-sm">Aucun vote pour le moment</p>
+{% endif %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier mon profil - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 max-w-2xl">
+    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-harmony-title mb-6">Modifier mon profil</h1>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block mb-2 font-semibold">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="text-gray-400 text-sm mt-1">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% if field.errors %}
+                        <p class="text-red-400 text-sm mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <div class="flex space-x-4">
+                <button type="submit" class="bg-harmony-red hover:bg-harmony-red-dark px-6 py-3 rounded-lg transition">
+                    Enregistrer
+                </button>
+                <a href="{% url 'profile' %}" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg transition">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    input[type="text"], input[type="date"], input[type="file"], textarea, select {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background-color: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #dd695a;
+    }
+</style>
+{% endblock %}

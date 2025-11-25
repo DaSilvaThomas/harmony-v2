@@ -1,0 +1,7 @@
+id : administrateur
+email : a@a.fr
+password : admin
+
+id : thomas
+email : thomas.test@gmail.com
+password : Harmony95-

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Mini-Jeu Quiz - Harmony{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-harmony-title mb-4">Quiz Musical</h1>
+        <p class="text-gray-300 mb-6">Testez vos connaissances musicales !</p>
+        <a href="{% url 'quiz_play_random' %}" class="bg-harmony-red hover:bg-harmony-red-dark px-8 py-4 rounded-lg text-lg font-bold transition inline-block">
+            🎲 Lancer un quiz aléatoire
+        </a>
+    </div>
+    
+    <!-- Scores globaux -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-white mb-6">🏆 Classement Général</h2>
+        <div class="bg-harmony-secondary p-6 rounded-lg shadow-lg">
+            {% if top_scores %}
+                <div class="space-y-3">
+                    {% for score in top_scores %}
+                        <div class="flex items-center justify-between p-4 bg-harmony-bg rounded {% if forloop.counter == 1 %}border-2 border-yellow-500{% elif forloop.counter == 2 %}border-2 border-gray-400{% elif forloop.counter == 3 %}border-2 border-orange-600{% endif %}">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-2xl font-bold text-harmony-title">{{ forloop.counter }}</span>
+                                <span class="font-semibold">{{ score.user__username }}</span>
+                            </div>
+                            <span class="text-harmony-title font-bold">{{ score.total }} pts</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-400 text-center">Aucun score enregistré pour le moment.</p>
+            {% endif %}
+        </div>
+    </section>
+    
+    <!-- Thèmes de quiz -->
+    <section>
+        <h2 class="text-2xl font-semibold text-white mb-6">🎶​ Thèmes Disponibles</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for theme in themes %}
+                <a href="{% url 'quiz_theme' theme.id %}" class="gradient-card p-6 rounded-lg shadow-lg hover:scale-105 transition transform">
+                    {% if theme.image %}
+                        <img src="{{ theme.image.url }}" alt="{{ theme.nom }}" class="w-full h-48 object-cover rounded-lg mb-4">
+                    {% else %}
+                        <div class="w-full h-48 bg-harmony-deep rounded-lg mb-4 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                    {% endif %}
+                    
+                    <h3 class="text-xl font-bold text-white mb-2">{{ theme.nom }}</h3>
+                    <p class="text-gray-200 text-sm mb-4">{{ theme.description|truncatewords:15 }}</p>
+                    
+                    <!-- Top 3 du thème -->
+                    {% with theme_scores|get_item:theme as scores %}
+                        {% if scores %}
+                            <div class="mt-4 pt-4 border-t border-white/20">
+                                <p class="text-xs text-gray-200 mb-2">Top 3:</p>
+                                {% for score in scores|slice:":3" %}
+                                    <div class="flex justify-between text-xs text-gray-200 mb-1">
+                                        <span>{{ score.user.username }}</span>
+                                        <span>{{ score.points_total }} pts</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </a>
+            {% empty %}
+                <p class="text-gray-400 col-span-3 text-center">Aucun thème disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+<template>
+    {% load custom_filters %}
+</template>
+{% endblock %}
