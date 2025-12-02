@@ -27,7 +27,7 @@ def salon_detail(request, salon_id):
         salon.membres.add(request.user)
     
     messages_list = salon.messages.all().order_by('-timestamp')[:50]
-    
+
     # Obtenir les votes actuels
     votes = salon.votes.values('track').annotate(count=Count('track')).order_by('-count')[:5]
     voted_tracks = []
@@ -39,8 +39,13 @@ def salon_detail(request, salon_id):
     suggested_tracks = search_jamendo_tracks(query='music', limit=5)
     
     form = MessageForm()
+
+    salons_communautaires = Salon.objects.filter(type='communautaire')
+    salons_thematiques = Salon.objects.filter(type='thematique')
     
     context = {
+        'salons_communautaires': salons_communautaires,
+        'salons_thematiques': salons_thematiques,
         'salon': salon,
         'messages': messages_list,
         'voted_tracks': voted_tracks,
@@ -61,7 +66,7 @@ def send_message(request, salon_id):
         message.save()
     
     # Retourner le fragment HTMX
-    messages_list = salon.messages.all().order_by('-timestamp')[:50]
+    messages_list = salon.messages.all().order_by('timestamp')[:50]
     return render(request, 'salons/messages_partial.html', {
         'messages': messages_list,
         'salon': salon
@@ -71,7 +76,7 @@ def send_message(request, salon_id):
 def get_messages(request, salon_id):
     """Vue pour HTMX polling des messages"""
     salon = get_object_or_404(Salon, id=salon_id)
-    messages_list = salon.messages.all().order_by('-timestamp')[:50]
+    messages_list = salon.messages.all().order_by('timestamp')[:50]
     return render(request, 'salons/messages_partial.html', {
         'messages': messages_list,
         'salon': salon
@@ -112,11 +117,19 @@ def create_salon(request):
             salon.owner = request.user
             salon.save()
             salon.membres.add(request.user)
-            messages.success(request, f'Salon "{salon.nom}" créé avec succès !')
+            # messages.success(request, f'Salon "{salon.nom}" créé avec succès !')
             return redirect('salon_detail', salon_id=salon.id)
     else:
         form = SalonForm()
-    return render(request, 'salons/create_salon.html', {'form': form})
+
+    salons_communautaires = Salon.objects.filter(type='communautaire')
+    salons_thematiques = Salon.objects.filter(type='thematique')
+
+    return render(request, 'salons/create_salon.html', {
+        'salons_communautaires': salons_communautaires,
+        'salons_thematiques': salons_thematiques,
+        'form': form
+    })
 
 @login_required
 def add_suggested_track(request, salon_id):

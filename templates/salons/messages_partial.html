@@ -1,20 +1,46 @@
 {% for message in messages %}
-    <div class="flex space-x-3">
-        <div class="flex-shrink-0">
-            {% if message.user.profile.photo %}
-                <img src="{{ message.user.profile.photo.url }}" alt="{{ message.user.username }}" class="w-10 h-10 rounded-full">
-            {% else %}
-                <div class="w-10 h-10 rounded-full bg-harmony-red flex items-center justify-center font-bold">
-                    {{ message.user.username.0|upper }}
+    {% if message.user == request.user %}
+        <!-- Message envoyé par l'utilisateur courant -->
+        <div class="flex justify-end space-x-3 mb-2">
+            <div class="flex flex-col items-end max-w-xs">
+                <div class="bg-harmony-red text-white p-3 rounded-lg rounded-br-none shadow-md">
+                    <p>{{ message.contenu }}</p>
                 </div>
-            {% endif %}
-        </div>
-        <div class="flex-1">
-            <div class="flex items-baseline space-x-2">
-                <span class="font-bold">{{ message.user.username }}</span>
-                <span class="text-xs text-gray-400">{{ message.timestamp|date:"H:i" }}</span>
+                <div class="flex items-center space-x-2 mt-1">
+                    <span class="text-xs text-gray-400">{{ message.timestamp|date:"H:i" }}</span>
+                </div>
             </div>
-            <p class="text-gray-300 mt-1">{{ message.contenu }}</p>
+            <div class="flex-shrink-0">
+                {% if message.user.profile.photo %}
+                    <img src="{{ message.user.profile.photo.url }}" alt="{{ message.user.username }}" class="w-10 h-10 rounded-full">
+                {% else %}
+                    <div class="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center font-bold text-white">
+                        {{ message.user.username.0|upper }}
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <!-- Message reçu d'un autre utilisateur -->
+        <div class="flex justify-start space-x-3 mb-2">
+            <div class="flex-shrink-0">
+                {% if message.user.profile.photo %}
+                    <img src="{{ message.user.profile.photo.url }}" alt="{{ message.user.username }}" class="w-10 h-10 rounded-full">
+                {% else %}
+                    <div class="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center font-bold text-white">
+                        {{ message.user.username.0|upper }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="flex flex-col max-w-xs">
+                <div class="flex items-baseline space-x-2">
+                    <span class="font-bold text-white">{{ message.user.username }}</span>
+                    <span class="text-xs text-gray-400">{{ message.timestamp|date:"H:i" }}</span>
+                </div>
+                <div class="bg-gray-700 text-white p-3 rounded-lg rounded-bl-none shadow-md mt-1">
+                    <p>{{ message.contenu }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endfor %}

@@ -4,13 +4,13 @@
 {% block title %}{{ salon.nom }} - Harmony{% endblock %}
 
 {% block content %}
-<div class="h-full flex flex-col" x-data="{ currentTrack: null }">
+<div class="flex flex-col px-4 py-1 mb-6" x-data="{ currentTrack: null }">
     <!-- En-tête du salon -->
-    <div class="bg-harmony-secondary p-6 shadow-lg">
+    <div class="p-6">
         <div class="container mx-auto">
-            <h1 class="text-3xl font-bold text-harmony-title mb-2">{{ salon.nom }}</h1>
-            <p class="text-gray-300">{{ salon.description }}</p>
-            <p class="text-sm text-gray-400 mt-2">{{ salon.membres.count }} membre{{ salon.membres.count|pluralize }} • Créé par {{ salon.owner.username }}</p>
+            <h1 class="text-3xl font-bold text-harmony-title mb-2">{{ salon.nom|capfirst }}</h1>
+            <p class="text-gray-300">{{ salon.description|capfirst }}</p>
+            <p class="text-sm text-gray-400 mt-2">{{ salon.membres.count }} membre{{ salon.membres.count|pluralize }} • Créé par {{ salon.owner.username|capfirst }}</p>
         </div>
     </div>
     
@@ -115,5 +115,21 @@
                 });
             });
     }
+
+    const messagesContainer = document.getElementById('messages-container');
+
+    function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Scroll initial
+    scrollToBottom();
+
+    // Scroll après chaque mise à jour HTMX
+    document.body.addEventListener('htmx:afterSwap', (e) => {
+        if (e.target.id === "messages-container") {
+            scrollToBottom();
+        }
+    });
 </script>
 {% endblock %}

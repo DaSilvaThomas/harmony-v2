@@ -1,6 +1,6 @@
 {% load static %}
 
-<nav class="bg-harmony-secondary border-b border-harmony-title relative"
+<nav class="bg-harmony-secondary border-b border-harmony-title relative shadow-md"
      x-data="{ 
         notificationsOpen: false,
         hasRecent: false,
@@ -67,11 +67,20 @@
                         </button>
 
                         <!-- Dropdown -->
-                        <div x-show="open" @click.away="open = false"
-                             class="absolute right-0 w-48 bg-harmony-secondary rounded-b-lg shadow-lg py-2 z-50"
-                             style="top: calc(100% + 1rem + 1px);">
-                            <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-harmony-bg">Mon compte</a>
-                            <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-harmony-bg">Déconnexion</a>
+                        <div 
+                            x-show="open"
+                            x-transition:enter="transition ease-out duration-150"
+                            x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                            x-transition:leave="transition ease-in duration-100"
+                            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                            x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                            @click.away="open = false"
+                            class="absolute right-0 w-48 bg-harmony-secondary rounded-b-lg shadow-lg py-2 z-50"
+                            style="top: calc(100% + 1rem + 1px);"
+                        >
+                            <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-harmony-red-dark">Mon compte</a>
+                            <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-harmony-red-dark">Déconnexion</a>
                         </div>
                     </div>
                 {% else %}

@@ -1,27 +1,63 @@
-<aside class="w-64 bg-harmony-secondary h-screen overflow-y-auto border-r border-gray-700">
-    <div class="p-4">
+<aside 
+    x-data="{ open: true }" 
+    :class="open ? 'w-64' : 'w-16'"
+    class="bg-harmony-secondary sticky top-0 h-screen overflow-y-auto border-r border-harmony-title pb-8 transition-all duration-300 relative">
+
+    <!-- Bouton toggle -->
+    <button 
+        @click="open = !open"
+        class="absolute top-3 right-3 w-10 h-10 flex items-center justify-center 
+               bg-harmony-red rounded-full shadow-md hover:bg-harmony-red-dark transition">
+
+        <!-- Flèche gauche -->
+        <svg x-show="open" xmlns="http://www.w3.org/2000/svg" 
+             class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M15 19l-7-7 7-7" />
+        </svg>
+
+        <!-- Flèche droite -->
+        <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" 
+             class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
+
+
+    <!-- CONTENU complet, masqué si open = false -->
+    <div x-show="open" class="p-4" x-transition>
+
+        <!-- Titre -->
         <h2 class="text-harmony-title text-lg font-bold mb-4">Salons</h2>
-        
+
         <!-- Salons Communautaires -->
         <div class="mb-6">
             <h3 class="text-sm font-semibold text-gray-400 mb-2">COMMUNAUTAIRES</h3>
+
             {% for salon in salons_communautaires %}
-                <a href="{% url 'salon_detail' salon.id %}" class="block px-3 py-2 rounded hover:bg-harmony-bg transition mb-1 {% if request.resolver_match.kwargs.salon_id == salon.id %}bg-harmony-bg{% endif %}">
-                    # {{ salon.nom }}
+                <a href="{% url 'salon_detail' salon.id %}"
+                   class="block px-3 py-2 rounded hover:bg-harmony-red-dark transition mb-1
+                          {% if request.resolver_match.kwargs.salon_id == salon.id %}bg-harmony-bg{% endif %}">
+                    {{ salon.nom|capfirst }}
                 </a>
             {% endfor %}
         </div>
-        
+
         <!-- Salons Thématiques -->
         <div>
             <h3 class="text-sm font-semibold text-gray-400 mb-2">THÉMATIQUES</h3>
+
             {% for salon in salons_thematiques %}
-                <a href="{% url 'salon_detail' salon.id %}" class="block px-3 py-2 rounded hover:bg-harmony-bg transition mb-1 {% if request.resolver_match.kwargs.salon_id == salon.id %}bg-harmony-bg{% endif %}">
-                    # {{ salon.nom }}
+                <a href="{% url 'salon_detail' salon.id %}"
+                   class="block px-3 py-2 rounded hover:bg-harmony-red-dark transition mb-1
+                          {% if request.resolver_match.kwargs.salon_id == salon.id %}bg-harmony-bg{% endif %}">
+                    {{ salon.nom|capfirst }}
                 </a>
             {% endfor %}
             
-            <a href="{% url 'create_salon' %}" class="block px-3 py-2 rounded bg-harmony-red hover:bg-harmony-red-dark transition mt-4 text-center">
+            <a href="{% url 'create_salon' %}"
+               class="block px-3 py-2 rounded bg-harmony-red hover:bg-harmony-red-dark transition mt-4 text-center">
                 + Créer un salon
             </a>
         </div>

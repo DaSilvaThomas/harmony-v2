@@ -21,9 +21,9 @@
             theme: {
                 extend: {
                     colors: {
-                        'harmony-bg': '#1a1a1a',
+                        'harmony-bg': '#0d0d0d',
                         'harmony-title': '#dd695a',
-                        'harmony-secondary': '#1e1e1e',
+                        'harmony-secondary': '#141414',
                         'harmony-red': '#ba332f',
                         'harmony-red-dark': '#8d2627',
                         'harmony-deep': '#6d1c1d',
@@ -44,6 +44,10 @@
         
         .gradient-card {
             background: linear-gradient(135deg, #ba332f 0%, #8d2627 100%);
+        }
+
+        .gradient-card-2 {
+            background: linear-gradient(135deg, #d4493d 0%, #b23a28 100%);
         }
         
         @keyframes blink {
@@ -66,22 +70,12 @@
             {% include 'sidebar.html' %}
         {% endif %}
         
-        <main class="flex-1 overflow-y-auto">
-            {% if messages %}
-                <div class="container mx-auto px-4 py-4">
-                    {% for message in messages %}
-                        <div class="bg-harmony-secondary border-l-4 {% if message.tags == 'error' %}border-red-500{% elif message.tags == 'success' %}border-green-500{% else %}border-blue-500{% endif %} p-4 mb-4 rounded">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
+        <main class="flex-1 overflow-y-auto">         
             {% block content %}{% endblock %}
+            {% include 'footer.html' %}
         </main>
     </div>
     
     {% block extra_js %}{% endblock %}
-    {% include 'footer.html' %}
 </body>
 </html>

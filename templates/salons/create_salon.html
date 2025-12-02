@@ -4,41 +4,73 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12 max-w-2xl">
-    <div class="bg-harmony-secondary p-8 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-harmony-title mb-6">Créer un salon thématique</h1>
-        
+    <div class="gradient-card p-8 rounded-lg">
+        <h1 class="text-3xl font-bold text-white mb-6 text-center">Créer un salon thématique</h1>
+
         <form method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
-            
+
+            <!-- Nom du salon -->
             <div>
-                <label for="{{ form.nom.id_for_label }}" class="block mb-2 font-semibold">Nom du salon</label>
+                <label for="{{ form.nom.id_for_label }}" class="block mb-2 font-semibold text-white">
+                    Nom du salon
+                </label>
                 {{ form.nom }}
+                {% if form.nom.help_text %}
+                    <p class="text-gray-300 text-sm mt-1">{{ form.nom.help_text }}</p>
+                {% endif %}
                 {% if form.nom.errors %}
                     <p class="text-red-400 text-sm mt-1">{{ form.nom.errors.0 }}</p>
                 {% endif %}
             </div>
-            
+
+            <!-- Description -->
             <div>
-                <label for="{{ form.description.id_for_label }}" class="block mb-2 font-semibold">Description</label>
+                <label for="{{ form.description.id_for_label }}" class="block mb-2 font-semibold text-white">
+                    Description
+                </label>
                 {{ form.description }}
+                {% if form.description.help_text %}
+                    <p class="text-gray-300 text-sm mt-1">{{ form.description.help_text }}</p>
+                {% endif %}
                 {% if form.description.errors %}
                     <p class="text-red-400 text-sm mt-1">{{ form.description.errors.0 }}</p>
                 {% endif %}
             </div>
-            
+
+            <!-- Image upload stylé -->
             <div>
-                <label for="{{ form.image.id_for_label }}" class="block mb-2 font-semibold">Image (optionnelle)</label>
-                {{ form.image }}
+                <label for="{{ form.image.id_for_label }}" class="block mb-2 font-semibold text-white">
+                    Image (optionnelle)
+                </label>
+
+                <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" class="hidden" accept="image/*">
+                <label for="{{ form.image.id_for_label }}"
+                    class="cursor-pointer w-full text-center bg-white/10 border border-white/20 text-white py-3 rounded-lg hover:bg-white/20 transition block">
+                    Choisir une image
+                </label>
+
+                <!-- Container pour l'aperçu -->
+                <div id="image-preview-container" class="mt-2 flex items-center space-x-2">
+                    <!-- Le preview JS apparaîtra ici -->
+                    <button type="button" id="remove-image-btn" class="hidden bg-red-600 text-white px-2 py-1 rounded-lg">
+                        Supprimer
+                    </button>
+                </div>
+
                 {% if form.image.errors %}
                     <p class="text-red-400 text-sm mt-1">{{ form.image.errors.0 }}</p>
                 {% endif %}
             </div>
-            
+
+            <!-- Boutons -->
             <div class="flex space-x-4">
-                <button type="submit" class="bg-harmony-red hover:bg-harmony-red-dark px-6 py-3 rounded-lg transition">
+                <button type="submit"
+                        class="bg-white text-harmony-red hover:bg-opacity-90 font-bold py-3 px-6 rounded-lg transition">
                     Créer le salon
                 </button>
-                <a href="{% url 'salon_list' %}" class="bg-gray-600 hover:bg-gray-700 px-6 py-3 rounded-lg transition">
+                <a href="{% url 'salon_list' %}"
+                   class="bg-harmony-deep hover:bg-opacity-80 font-bold px-6 py-3 rounded-lg transition text-white">
                     Annuler
                 </a>
             </div>
@@ -46,19 +78,72 @@
     </div>
 </div>
 
+<!-- Style inputs identique au formulaire profil -->
 <style>
-    input[type="text"], input[type="file"], textarea {
-        width: 100%;
-        padding: 0.75rem;
-        border-radius: 0.5rem;
-        background-color: #1a1a1a;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: white;
-    }
-    
-    input:focus, textarea:focus {
-        outline: none;
-        border-color: #dd695a;
-    }
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById("id_image");
+    const previewContainer = document.getElementById("image-preview-container");
+    const removeBtn = document.getElementById("remove-image-btn");
+
+    fileInput.addEventListener("change", function () {
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Supprime l'ancien preview si existant
+                let oldPreview = document.getElementById("image-preview");
+                if (oldPreview) oldPreview.remove();
+
+                // Crée le preview
+                const preview = document.createElement("img");
+                preview.id = "image-preview";
+                preview.src = e.target.result;
+                preview.className = "w-28 h-20 rounded-lg object-cover border-2 border-harmony-red";
+                
+                previewContainer.prepend(preview);
+                removeBtn.classList.remove("hidden");
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    });
+
+    removeBtn.addEventListener("click", function () {
+        const preview = document.getElementById("image-preview");
+        if (preview) preview.remove();
+
+        fileInput.value = "";
+        removeBtn.classList.add("hidden");
+    });
+});
+</script>
 {% endblock %}

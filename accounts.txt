@@ -5,3 +5,24 @@ password : admin
 id : thomas
 email : thomas.test@gmail.com
 password : Harmony95-
+
+id : romain
+password : Fgh67hjf-
+
+id : charlotte
+password : fgE4-5hYU
+
+id : bob
+password : qV7-5GjH7
+
+id : alain
+password : f56_sf456
+
+id : william
+password : fg67_'GH3
+
+id : paul
+password : gGHJ75-_Jy6
+
+id : saito
+password : 6_Tg3-Hr7
